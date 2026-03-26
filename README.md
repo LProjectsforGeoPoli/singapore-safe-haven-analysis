@@ -1,0 +1,1 @@
+# singapore-safe-haven-analysis
