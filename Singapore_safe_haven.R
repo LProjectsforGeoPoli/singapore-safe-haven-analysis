@@ -1,6 +1,5 @@
 # ============================================
 # SINGAPORE SAFE HAVEN PROJECT
-# Date: March 2024
 # Quantitative analysis testing whether Singapore acts as a 
 #              regional safe haven during geopolitical crises
 
