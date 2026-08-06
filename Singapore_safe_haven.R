@@ -1,6 +1,5 @@
 # ============================================
 # SINGAPORE SAFE HAVEN PROJECT
-# Author: Your Name
 # Date: March 2024
 # Description: Quantitative analysis testing whether Singapore acts as a 
 #              regional safe haven during geopolitical crises
