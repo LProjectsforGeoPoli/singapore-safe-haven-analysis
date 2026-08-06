@@ -1,9 +1,8 @@
 # ============================================
 # SINGAPORE SAFE HAVEN PROJECT
 # Date: March 2024
-# Description: Quantitative analysis testing whether Singapore acts as a 
+# Quantitative analysis testing whether Singapore acts as a 
 #              regional safe haven during geopolitical crises
-# ============================================
 
 # Load required libraries
 library(quantmod)
@@ -12,19 +11,19 @@ library(dplyr)
 library(tidyr)
 
 # ============================================
-# PART 1: PELOSI TAIWAN EVENT - MAIN ANALYSIS
+# 1) PELOSI TAIWAN EVENT - MAIN ANALYSIS
 # ============================================
 
 cat("\n==========================================\n")
 cat("PART 1: PELOSI TAIWAN EVENT (August 2, 2022)\n")
 cat("==========================================\n\n")
 
-# Download Singapore and Emerging Markets data
+# Downloading Singapore and Emerging Markets data
 cat("Downloading data...\n")
 getSymbols("EWS", from = "2022-06-01", to = "2022-09-30")
 getSymbols("EEM", from = "2022-06-01", to = "2022-09-30")
 
-# Calculate daily returns
+# Calculating daily returns
 ews_returns <- dailyReturn(Cl(EWS))
 eem_returns <- dailyReturn(Cl(EEM))
 
@@ -37,7 +36,7 @@ cat("\n--- DAY 1 RESULTS (August 3, 2022) ---\n")
 day1_results <- round(all_returns["2022-08-03"] * 100, 2)
 print(day1_results)
 
-# One-week cumulative results (August 3-10, 2022)
+# 1-week cumulative results (August 3-10, 2022)
 after_data <- as.data.frame(all_returns["2022-08-03/2022-08-10"])
 after_data <- after_data[complete.cases(after_data), ]
 
@@ -50,15 +49,15 @@ cat(paste("Emerging Markets:", round(em_total, 2), "%\n"))
 cat(paste("SINGAPORE OUTPERFORMANCE:", round(sg_total - em_total, 2), "%\n"))
 
 # ============================================
-# PART 2: MULTI-EVENT ANALYSIS
+# 2) MULTI-EVENT ANALYSIS
 # ============================================
 
 cat("\n\n==========================================\n")
 cat("PART 2: MULTI-EVENT ANALYSIS\n")
 cat("==========================================\n\n")
 
-# Function to analyze one event
-analyze_event <- function(ticker, event_date) {
+# Function to analyse one event
+analyse_event <- function(ticker, event_date) {
   start_date <- as.Date(event_date) - 60
   end_date <- as.Date(event_date) + 20
   getSymbols(ticker, from = start_date, to = end_date, auto.assign = TRUE)
@@ -100,7 +99,7 @@ cat(paste("\nAverage Outperformance Across All Events:",
           round(mean(multi_results$Outperformance), 2), "%\n"))
 
 # ============================================
-# PART 3: COUNTRY COMPARISON ANALYSIS
+# 3) COUNTRY COMPARISON ANALYSIS
 # ============================================
 
 cat("\n\n==========================================\n")
@@ -144,7 +143,7 @@ for(country in names(countries)) {
   ))
 }
 
-# Sort by performance
+# Sorting by performance
 country_results <- country_results[order(-country_results$One_Week_Return), ]
 country_results$Rank <- 1:nrow(country_results)
 
@@ -152,7 +151,7 @@ cat("\n--- COUNTRY RANKINGS (One-Week Return) ---\n")
 print(country_results)
 
 # ============================================
-# PART 4: CURRENCY ANALYSIS
+# 4) CURRENCY ANALYSIS
 # ============================================
 
 cat("\n\n==========================================\n")
@@ -205,12 +204,12 @@ cat("\n\n==========================================\n")
 cat("PART 5: CREATING VISUALIZATION\n")
 cat("==========================================\n\n")
 
-# Prepare data for chart
+# Preparing data for chart
 chart_data <- as.data.frame(all_returns["2022-07-15/2022-08-20"])
 chart_data$Date <- as.Date(rownames(chart_data))
 chart_data <- chart_data[complete.cases(chart_data), ]
 
-# Create chart
+# Creating chart
 p <- ggplot(chart_data, aes(x = Date)) +
   geom_line(aes(y = Singapore * 100, color = "Singapore"), size = 1) +
   geom_line(aes(y = EmergingMarkets * 100, color = "Emerging Markets"), size = 1) +
@@ -226,14 +225,13 @@ p <- ggplot(chart_data, aes(x = Date)) +
   theme_minimal() +
   theme(legend.position = "bottom")
 
-# Display and save chart
+# Displaying and save chart
 print(p)
 ggsave("Singapore_Safe_Haven_Chart.png", width = 10, height = 6)
 cat("\nChart saved as 'Singapore_Safe_Haven_Chart.png'\n")
 
 # ============================================
-# PART 6: SUMMARY OF KEY FINDINGS
-# ============================================
+# 6) SUMMARY OF KEY FINDINGS
 
 cat("\n\n==========================================\n")
 cat("PART 6: SUMMARY OF KEY FINDINGS\n")
